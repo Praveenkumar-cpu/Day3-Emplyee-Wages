@@ -1,21 +1,53 @@
 package bridgelab;
 
+import java.util.Random;
+
 public class EmployeeWages
 {
     public static void main(String[] args)
     {
-        int IS_PART_TIME =2;
-        int IS_FULL_TIME = 1;
-        int EMP_RATE_PER_HOUR = 20;
-        int empHrs = 0;
-        int totalWage = 0;
-        double empcheck= Math.floor(Math.random() *10) % 3;
-        if (empcheck == IS_FULL_TIME)
-            empHrs = 8;
-        else if (empcheck == IS_PART_TIME)
-            empHrs = 4;
-        totalWage = empHrs * EMP_RATE_PER_HOUR;
-        System.out.println("Emp WAge: " + totalWage);
-    }
+        System.out.println("Welcome to employee wage computation. ");
+
+        Random rand = new Random();
+
+        int empHrs;
+
+        int present = 1;
+
+        int absent = 2;
+
+        int part_time_present = 3;
+
+        int check=rand.nextInt(3)+1;
+
+        int wage_per_hr = 20;
+
+        int full_day_hr = 8;
+
+        int part_time_hr = 8;
+
+        if (check == present) {
+
+            System.out.println("Employee is present.");
+
+        }
+
+        else if (check == part_time_present) {
+
+            System.out.println("Employee is present for part time.");
+        }
+
+        else {
+
+            System.out.println("Employee is absent.");
+        }
+
+        switch (check) {
+            case 1 -> empHrs = 8;
+            case 2 -> empHrs = 0;
+            case 3 -> empHrs = 4;
+        }
 
     }
+
+}
