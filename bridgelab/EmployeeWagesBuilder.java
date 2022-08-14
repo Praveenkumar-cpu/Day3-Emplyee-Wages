@@ -1,27 +1,43 @@
 package bridgelab;
 
-import java.util.Random;
-
 public class EmployeeWagesBuilder{
+    final static int IS_FULL_TIME = 1;
+    final static int IS_PART_TIME = 2;
+    private int numberOfCompanies = 0;
 
-    //constants
-    public static final int IS_PART_TIME = 1;
-    public static final int IS_FULL_TIME = 2;
-    private final String company;
-    private final int numbersOfWorkingDays;
-    private final int maxHoursPerMonth;
-    private final int empRatePerHr;
+    private static int numberOfWorkingDays=0;
 
+    private static int maxHoursPerMonth = 0;
 
-    public EmployeeWagesBuilder(String company, int numbersOfWorkingDays, int maxHoursPerMonth, int empRatePerHr) {
-        this.company = company;
-        this.numbersOfWorkingDays = numbersOfWorkingDays;
+    private static int empRatePerHr = 0;
+    private  Company[] company;
+
+    public EmployeeWagesBuilder(int numberOfWorkingDays, int maxHoursPerMonth, int empRatePerHr) {
+        EmployeeWagesBuilder.numberOfWorkingDays = numberOfWorkingDays;
         this.maxHoursPerMonth = maxHoursPerMonth;
         this.empRatePerHr = empRatePerHr;
+        this.company = new Company[5];
     }
+
+
+    public void addCompanyDetailsForEmpWage(String companyName, int empRatePerHr, int numberOfWorkingDays,
+                                            int maxWorkingHrsPerMonth) {
+        company[numberOfCompanies] = new Company(companyName, empRatePerHr, numberOfWorkingDays,
+                maxWorkingHrsPerMonth);
+        numberOfCompanies++;
+    }
+
+    public void companyEmpWage() {
+        for (int i = 0; i < numberOfCompanies; i++) {
+            this.empWageComputation(company[i]);
+        }
+    }
+
+    // method to get working hour of a employee for a day
     public int getEmpHrs() {
         int empHrs;
         double empCheck = Math.floor(Math.random() * 10) % 3;
+        // checking how much employee has worked daily
         switch ((int) empCheck) {
             case IS_FULL_TIME:
                 empHrs = 8;
@@ -36,30 +52,32 @@ public class EmployeeWagesBuilder{
         }
         return empHrs;
     }
-    public void empWageComputation() {
+
+
+    public void empWageComputation(Company company) {
         int days = 0;
-        int totalWorkingHrs = 0, totalEmpWage;
-        while (days < numbersOfWorkingDays && totalWorkingHrs <= maxHoursPerMonth) {
+        int totalWorkingHrs = 0;
+        int totalEmpWage = 0;
+        while (days < company.numberOfWorkingDays && totalWorkingHrs <= company.maxWorkingHrsPerMonth) {
+            
             days++;
-            int empHrs = getEmpHrs();
+            int empHrs = this.getEmpHrs();
             totalWorkingHrs += empHrs;
             System.out.println("emp hrs : " + empHrs);
         }
-        totalEmpWage = totalWorkingHrs * empRatePerHr;
-        System.out.println("Total Emp wage for company " + this.company + " is " + totalEmpWage);
+        totalEmpWage = totalWorkingHrs * company.empRatePerHr;
+        System.out.println("Total employee wage for company " + company.companyName + " is " + totalEmpWage);
     }
 
-
-
-    public static void main(String[] args) {
-
+    public static void main(String args[]) {
+        // welcome message
         System.out.println("Welcome to employee wage computation problem");
-        EmployeeWagesBuilder infosys = new EmployeeWagesBuilder("Infosys", 20, 10, 2);
-        EmployeeWagesBuilder wipro = new EmployeeWagesBuilder("Wipro", 10, 20, 4);
-        infosys.empWageComputation();
-        wipro.empWageComputation();
-
-
+        System.out.println("Calculating wages for employees");
+        EmployeeWagesBuilder empWageBuilder = new EmployeeWagesBuilder(numberOfWorkingDays, maxHoursPerMonth, empRatePerHr);
+        empWageBuilder.addCompanyDetailsForEmpWage("infosys", 20, 20, 100);
+        empWageBuilder.addCompanyDetailsForEmpWage("wipro", 25, 20, 80);
+        empWageBuilder.companyEmpWage();
     }
+
 
 }
