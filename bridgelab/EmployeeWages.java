@@ -46,8 +46,7 @@ public class EmployeeWages {
         System.out.println("Welcome to employee wage computation problem");
         empWageComputation("WIPRO", 20, 10, 2);
         empWageComputation("INFOSYS", 10, 20, 4);
-
-
+        
     }
 
 }
