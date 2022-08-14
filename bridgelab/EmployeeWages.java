@@ -9,33 +9,44 @@ public class EmployeeWages {
     public static final int NUM_OF_WORKING_DAYS = 2;
     public static final int MAX_HOURS_IN_MONTH = 18;
 
-    public static int computeEmpwage() {
-        int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
 
-        while (totalEmpHrs <= MAX_HOURS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
-            totalWorkingDays++;
-            int empCheck = (int) Math.floor(Math.random() * 10) % 3;
-            switch (empCheck) {
-                case IS_PART_TIME:
-                    empHrs = 4;
-                    break;
-                case IS_FULL_TIME:
-                    empHrs = 8;
-                    break;
-                default:
-                    empHrs = 0;
-            }
-            totalEmpHrs += empHrs;
-            System.out.println("Day#:  " + totalWorkingDays + "Emp Hr: " + empHrs);
+    public static int getEmpHrs() {
+        int empHrs;
+        double empCheck = Math.floor(Math.random() * 10) % 3;
+        switch ((int) empCheck) {
+            case IS_FULL_TIME:
+                empHrs = 8;
+                break;
+
+            case IS_PART_TIME:
+                empHrs = 4;
+                break;
+
+            default:
+                empHrs = 0;
         }
-        int totalEmpwage = totalEmpHrs * EMP_RATE_PER_HOUR;
-        System.out.println("Total Emp wage: " + totalEmpwage);
-                return totalEmpwage;
+        return empHrs;
+    }
+    public static void empWageComputation(String company, int numbersOfWorkingDays, int maxHoursPerMonth,
+                                          int empRatePerHr) {
+        int days = 0;
+        int totalWorkingHrs = 0, totalEmpWage;
+        while (days < numbersOfWorkingDays && totalWorkingHrs <= maxHoursPerMonth) {
+            days++;
+            int empHrs = getEmpHrs();
+            totalWorkingHrs += empHrs;
+            System.out.println("employee hrs : " + empHrs);
+        }
+        totalEmpWage = totalWorkingHrs * empRatePerHr;
+        System.out.println("Total Employee wage for company " + company + " is " + totalEmpWage);
     }
 
     public static void main(String[] args) {
 
-        computeEmpwage();
+        System.out.println("Welcome to employee wage computation problem");
+        empWageComputation("WIPRO", 20, 10, 2);
+        empWageComputation("INFOSYS", 10, 20, 4);
+
 
     }
 
